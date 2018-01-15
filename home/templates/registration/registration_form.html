@@ -1,0 +1,55 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+{% block title %}{% trans "Register for an account" %}{% endblock %}
+
+{% block content %}
+<br>
+<br>
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<div class="container">
+	<div class="row justify-content-md-center">
+		<div class="col col-lg-6">
+			<h2>Register</h2>
+			<hr>
+<form method="post" action="" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "star" %} Submit
+    </button>
+  {% endbuttons %}
+</form>
+
+			<hr>
+			<div class="login-register text-center">
+                <a href="{% url 'auth_login' %}"><small>{% trans "log in" %}</a> or <a href="{% url 'home' %}">{% trans "go to home page" %}</small></a>
+            </div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% comment %}
+**registration/registration_form.html**
+Used to show the form users will fill out to register. By default, has
+the following context:
+
+``form``
+    The registration form. This will be an instance of some subclass
+    of ``django.forms.Form``; consult `Django's forms documentation
+    <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
+    information on how to display this in a template.
+{% endcomment %}

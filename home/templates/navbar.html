@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Navbar content -->
+    <a class="navbar-brand  mb-0 h1" href="{% url 'home' %}"><i class="fas fa-home"></i> Worka</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+  {% if request.user.is_authenticated %}
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+        	{% if request.user.is_superuser %}
+      <li class="nav-item">
+            <a class="nav-link" href='{% url "admin:index" %}'><i class="fab fa-superpowers"></i> Admin</a>
+          </li>
+          {% endif %}
+        	<li class="nav-item">
+            <a class="nav-link" href='#'><i class="fas fa-calendar-times"></i> Timesheets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href='#'><i class="fas fa-briefcase"></i> Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href='#'><i class="fas fa-envelope"></i> Messages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href='{% url "profileView" %}'><i class="fas fa-cog fa-spin"></i> Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'auth_logout' %}"><i class="fas fa-sign-out-alt"></i> Log out {{request.user}}</a>
+          </li></ul>
+      </div>
+{% else %}
+      <div class="collapse navbar-collapse  justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-star"></i> Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-dollar-sign"></i> Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'auth_login' %}"><i class="fas fa-sign-in-alt"></i> Sign-in</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'registration_register' %}"><i class="fas fa-hourglass-start"></i> Free trial</a>
+          </li>
+        </ul>
+      </div>
+    
+    {% endif %}
+</nav>

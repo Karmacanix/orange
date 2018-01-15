@@ -1,0 +1,21 @@
+{# still need to put groups restrcitions for project admin and approvers, project admin should have his own navbar #}
+{# need to move all the navabr logic to it's own html and have it launch of base.html #}
+
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block head_title %}Worka | Home{% endblock %}
+{% block content %}
+<div class="container">
+<div class="jumbotron">
+	<h1>Welcome to Worka</h1>
+</div>
+
+</div>
+
+<form id="accountLogOutForm" style="display: none;" action="{% url 'auth_logout' %}" method="POST">
+    {% csrf_token %}
+</form>
+
+
+{% endblock %}
