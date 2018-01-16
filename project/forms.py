@@ -6,7 +6,7 @@ from project.models import Project, ProjectTeam, Task
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ('name', 'desc', 'start_date', 'end_date')
+        fields = ('name', 'desc', 'owners', 'start_date', 'end_date')
         widgets = {
         	'desc': Textarea(attrs={'cols': 40, 'rows': 4}),
              # need to create a validator that prevents a project start date occuring after the end date - if sd gte ed then error 

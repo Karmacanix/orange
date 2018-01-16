@@ -13,6 +13,7 @@ from django.db import models
 class Project(models.Model):
 	name = models.CharField(max_length=120, verbose_name='Title')
 	desc = models.CharField(max_length=300, verbose_name='Purpose')
+	owners = models.ManyToManyField(settings.AUTH_USER_MODEL)
 	start_date = models.DateField(verbose_name='Starts')
 	end_date = models.DateField(verbose_name='Ends')
 	created = models.DateTimeField(auto_now_add=True)

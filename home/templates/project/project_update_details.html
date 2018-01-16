@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load bootstrap3 %}
+{% load worka_tags %}
+
+{% block head_title %}projects{% endblock %}
+
+{% block body_class %}detail{% endblock %}
+
+{% block body_base %} 
+
+{% if perms.projects.can_change_project %}
+
+<div class="container">
+    <div class="row"> 
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Edit project details</a></li>
+            <li><a href="{% url 'projects:update_project_tasks' project.id %}">Manage project tasks</a></li>
+            <li><a href="{% url 'projects:update_project_team' project.id %}">Manage the team</a></li>
+        </ul>
+    </div>
+</div>
+
+{% include "_messages.html" %}
+
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h3 class="text-primary">Edit project details...</h3>
+        </div>
+    </div>
+       
+    <div class="row">
+        <form class="form-horizontal" id="myProjectDetails" action="." method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="row text-right">  
+            <button class="btn btn-link btn-lg"><a href="{% url 'projects:projectList' %}">project list <i class="fa fa-level-up fa-1"></i> </a></button>
+            <button class="btn btn-warning btn-lg"><i class="fa fa-plus-circle fa-1"></i> new</button>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save fa-1"></i> save</button>
+        </div>
+        </form>
+        
+    </div>
+</div>	
+
+{% else %}
+    <div class="container"><p class="lead text-warning">You do not have the correct permissions to view this page.</p></div>
+{% endif %}
+
+<script>
+    $(function () {
+        $('.datetime-input').datetimepicker({
+            format:'DD-MM-YYYY'
+        });
+    });
+</script>
+
+{% endblock %}

@@ -24,11 +24,9 @@
             formCssClass: 'dynamic-teamformset'
         });
     })
-
-    $(function() {
-        
-    })
-</script>
+    </script>
+<script> $('#add_more').click(function() { cloneMore('div.table:last', 'myTaskTable'); }); </script>
+      
 {% endblock %}
 
 {% block content %}
@@ -45,7 +43,7 @@
 
 <br/>
 <div class="tab-content">
-	<div id="home" class="tab-pane fade in active">
+	<div id="home" class="tab-pane active">
 		<div class="col col-6 card">
 			<form class="form-horizontal" method="post" action="{% url 'project:projectUpdate' project.id %}">
 				{% csrf_token %}
@@ -57,7 +55,7 @@
 			</form>
 		</div>
 	</div>
-	<div id="menu1" class="tab-pane fade">
+	<div id="menu1" class="tab-pane">
 		<div class="col col-6 card">
 			<form class="form-horizontal" id="myProjectTasks" action="." method="post">
 				{% csrf_token %} 
@@ -82,13 +80,13 @@
 					</tbody>
 				</table>
 				<div class="row text-right">
-					<button class="btn btn-warning btn-lg"><i class="fa fa-plus-circle"></i> Add new task</button>
+					<button class="btn btn-warning btn-lg" id='add_more'><i class="fa fa-plus-circle"></i> Add new task</button>
 					<button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save fa-1"></i> Submit</button>
 				</div>
 			</form>
 		</div>
 	</div>
-	<div id="menu2" class="tab-pane fade">
+	<div id="menu2" class="tab-pane">
 		<div class="col col-6 card">
 		
 		<form class="form-horizontal" id="myProjectTeam" action="." method="post">

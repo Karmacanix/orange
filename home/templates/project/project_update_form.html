@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load static %}
+{% load bootstrap3 %}
+{% load worka_tags %}
+{% block head_title %}projects{% endblock %}
+
+{% block extra_head %}
+<script type="text/javascript">
+    $(function() {
+        $('#myTaskTable tbody tr').formset({
+            prefix: '{{ task_formset.prefix }}',
+            formCssClass: 'dynamic-taskformset'
+        });
+        $('#myTeamTable tbody tr').formset({
+            prefix: '{{ team_formset.prefix }}',
+            formCssClass: 'dynamic-teamformset'
+        });
+    })
+</script>
+{% endblock %}
+
+{% block body_class %}detail{% endblock %}
+
+{% block body_base %} 
+{% if perms.projects.can_change_project %}
+
+{% include "_messages.html" %}
+{% blocktrans %} {% endblocktrans %}
+<div class="container">
+    <div class="col col-md-8">
+    <div class="row">
+    <form class="form-horizontal" id="myProjectDetails" action="." method="post">
+        <div class="page-header">
+            <h3 class="text-primary">Edit project details...</h3>
+        </div>{% include "projects/project_nav.html" %}
+        {% csrf_token %} 
+        {{ team_formset.management_form }}
+        {{ task_formset.management_form }}
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#details-tab"><h4 class="text-primary"><i class="fa fa-info-circle fa-1"></i> Details</h4></a></li>
+            <li><a data-toggle="tab" href="#team-tab"><h4 class="text-primary"><i class="fa fa-users"></i> Team members <span class="badge badge-pill badge-primary">{{ project.num_of_team_members }}</span></h4></a></li>
+            <li><a data-toggle="tab" href="#tasks-tab"><h4 class="text-primary"><i class="fa fa-wrench"></i> Tasks <span class="badge badge-pill badge-primary">{{ project.num_of_tasks }}</span></h4></a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="details-tab" class="tab-pane fade in active">
+                <div class="row">
+                    <br>
+                    {{ project_form|bootstrap_horizontal }}
+                </div>
+            </div>
+            <div id="team-tab" class="tab-pane fade">
+                <div class="row">
+                    <table id="myTeamTable"  class="table table-striped table-hover">
+                        <thead>
+                            <th>User</th>
+                            <th>Allocation %</th>
+                            <th>Active</th>
+                            <th>-</th>
+                        </thead>
+                         <tbody>
+                            {% for form in team_formset %}
+                                <tr><td>{% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+                                        {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                                        {{form.member|addcss:"form-control"}}
+                                    </td>
+                                    <td>
+                                        {{form.percent_allocated|addcss:"form-control"}}
+                                    </td>
+                                    <td>{{form.is_active|addcss:"form-control"}}</td>
+                                    <td></td>
+                                </tr>       
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+            <div id="tasks-tab" class="tab-pane fade">
+                <div class="row">
+                    <table id="myTaskTable" class="table table-striped table-hover">
+                        <thead>
+                        	<th>Name</th>
+                        	<th>Active</th>
+                            <th>Start</th>
+                            <th>Finish</th>
+                            <th>-</th>
+                        </thead>
+                        <tbody>
+                            {% for form in task_formset %}
+                                <tr><td>
+                                    {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+                                    {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                                    {{form.title|addcss:"form-control"}}
+                                </td>
+                                <td>{{form.is_active|addcss:"form-control"}}</td>
+                                <td>{{form.start|addcss:"form-control"}}</td>
+                                <td>{{form.finish|addcss:"form-control"}}</td>
+                                <td></td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+<hr></hr>
+        <div class="row text-right">  
+    		<button class="btn btn-link btn-lg"><a href="{% url 'projects:projectList' %}">project list <i class="fa fa-level-up fa-1"></i> </a></button>
+            <button class="btn btn-warning btn-lg"><i class="fa fa-plus-circle fa-1"></i> new</button>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save fa-1"></i> save</button>
+        </div>
+    </form>
+</div>	
+</div></div>	
+
+{% else %}
+    <div class="container"><p class="lead text-warning">You do not have the correct permissions to view this page.</p></div>
+{% endif %}
+
+<script>
+    $(function () {
+        $('.datetime-input').datetimepicker({
+            format:'YYYY-MM-DD'
+        });
+    });
+</script>
+
+{% endblock %}

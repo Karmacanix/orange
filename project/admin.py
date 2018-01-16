@@ -18,6 +18,7 @@ class ProjectAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None,						{'fields': [('name','desc'), ]}),
 		('Project length',			{'fields': [('start_date', 'end_date')]}),
+		('Owners',			{'fields': [('owners')]}),
 	]
 	inlines = [
 		TaskInline,
