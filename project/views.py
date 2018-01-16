@@ -29,9 +29,7 @@ class ProjectUpdate(UpdateView):
         context = super(ProjectUpdate, self).get_context_data(**kwargs)
         if self.request.POST:
             context['task_formset'] = TaskFormSet(self.request.POST, instance=self.object, prefix="task")
-            context['task_formset'].full_clean()
             context['team_formset'] = ProjectTeamFormSet(self.request.POST, instance=self.object, prefix="team")
-            context['team_formset'].full_clean()
         else:
             context['task_formset'] = TaskFormSet(instance=self.object, prefix="task")
             context['team_formset'] = ProjectTeamFormSet(instance=self.object, prefix="team")

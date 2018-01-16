@@ -26,7 +26,7 @@ class TaskForm(ModelForm):
 
     class Meta:
         model = Task
-        fields = ('title', 'project', 'is_active')
+        fields = '__all__'
 
 TaskFormSet = inlineformset_factory(Project, Task, form=TaskForm, extra=0, can_delete=True, min_num=1)
 ProjectTeamFormSet = inlineformset_factory(Project, ProjectTeam, form=ProjectTeamForm, extra=0, can_delete=True, min_num=1)
