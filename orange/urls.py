@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^accounts/', include('registration.auth_urls')),
     url(r'^$', TemplateView.as_view(template_name="homepage.html"), name="home"),
     url(r'^accounts/profile/', ProfileView.as_view(), name="profileView"),
+    url(r'^project/', include('project.urls')),
 ]

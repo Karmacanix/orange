@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block title %}{% trans "Project List" %}{% endblock %}
+
+{% block content %}
+<br>
+<br>
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<div class="container">
+
+  <h2>Project List</h2>
+            <hr>
+<a href="{% url 'project:projectCreate' %}"><h5 class="text-primary"><i class="fa fa-plus-circle"></i> add a new project</h5></a>
+            <table class='table table-bordered table-hover'>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Start</th>
+					<th>End</th>
+					<th class="text-warning">Go live in</th>
+				</tr>
+				
+			</thead>
+			{% for project in project_list %}
+			<tr>
+				<td><a href="{% url 'project:projectUpdate' project.id %}">{{ project.name }}</a></td>
+				<td>{{ project.desc }}</td>
+				<td>{{ project.start_date|date:"d M y" }}</td>
+				<td>{{ project.end_date|date:"d M y" }}</td>
+				<td>{{ project.days_until_go_live }} days</td>
+			</tr>
+			{% endfor %}
+		</table>
+</div>
+
+
+{% endblock %}
